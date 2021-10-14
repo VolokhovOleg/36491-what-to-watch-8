@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-
-const title = 'The Grand Budapest Hotel';
-const genre = 'Drama';
-const release = '2012';
+import {films} from './moks/films';
 
 ReactDOM.render(
   <React.StrictMode>
     <App
-      title={title}
-      genre={genre}
-      release={release}
+      films={films}
     />
   </React.StrictMode>,
   document.getElementById('root'));

@@ -6,5 +6,7 @@ export enum Path {
   PLAYER = '/player/:id',
   MY_LIST = '/mylist',
 }
-
 export type InlineStyleType = {[key: string]: string | number};
+export type RouteParams = {
+  id: string
+};
