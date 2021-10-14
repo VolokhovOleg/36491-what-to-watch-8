@@ -1,5 +1,5 @@
-import {Film as FilmType} from '../moks/films';
-import FilmItem from './film-item/film-item';
+import {Film as FilmType} from '../../moks/films';
+import FilmItem from '../film-item/film-item';
 
 type Props = {
   films: FilmType[]

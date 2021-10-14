@@ -1,5 +1,5 @@
 import {Film as FilmType} from '../../moks/films';
-import FilmList from '../film-list';
+import FilmList from '../film-list/film-list';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router';
 import {RouteParams} from '../../types';

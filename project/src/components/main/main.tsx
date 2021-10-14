@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Film as FilmType, Film} from '../../moks/films';
-import FilmList from '../film-list';
+import FilmList from '../film-list/film-list';
 
 type Props = {
   films: FilmType[]
