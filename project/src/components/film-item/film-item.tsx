@@ -1,16 +1,24 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {Film} from '../../moks/films';
+import {DELAY_TO_PLAY_VIDEO} from '../../consts';
+import FilmCardVideoPlayer from '../film-card-videoplayer/film-card-videoplayer';
 
-type Props = Partial<Film>;
+type Props = Pick<Film, 'imageSrc' | 'title' | 'id' | 'trailerSrc'>;
 
-function FilmItem({imageSrc, title, id}: Props): JSX.Element {
-  const [, setActiveState] = useState<boolean>(false);
+function FilmItem({imageSrc, title, id, trailerSrc}: Props): JSX.Element {
+  const [isActive, setActiveState] = useState<boolean>(false);
+  const [timeoutHandle, setTimeoutHandleState] = useState<number | null>(null);
+
   const onMouseOverFilmHandler = (): void => {
-    setActiveState(true);
+    setTimeoutHandleState(window.setTimeout(() => setActiveState(true), DELAY_TO_PLAY_VIDEO));
   };
   const onMouseLeaveFilmHandler = (): void => {
-    setActiveState(false);
+    if (timeoutHandle) {
+      window.clearTimeout(timeoutHandle);
+      setTimeoutHandleState(null);
+      setActiveState(false);
+    }
   };
 
   return (
@@ -19,12 +27,19 @@ function FilmItem({imageSrc, title, id}: Props): JSX.Element {
       onMouseLeave={onMouseLeaveFilmHandler}
       className="small-film-card catalog__films-card"
     >
-      <div className="small-film-card__image">
-        <img src={imageSrc} alt={title} width={280} height={175}/>
-      </div>
-      <h3 className="small-film-card__title">
-        <Link className={'small-film-card__link'} to={`film/${id}`}>{title}</Link>
-      </h3>
+      {
+        !isActive ?
+          <>
+            <div className="small-film-card__image">
+              <img src={imageSrc} alt={title} width={280} height={175}/>
+            </div>
+            <h3 className="small-film-card__title">
+              <Link className={'small-film-card__link'} to={`film/${id}`}>{title}</Link>
+            </h3>
+          </>
+          :
+          <FilmCardVideoPlayer trailerSrc={trailerSrc} imageSrc={imageSrc} />
+      }
     </article>
   );
 }

@@ -10,12 +10,13 @@ function FilmList({films}: Props): JSX.Element {
     <div className="catalog__films-list">
       {
         films.map((item: FilmType) => {
-          const {imageSrc, title, id} = item;
+          const {imageSrc, title, trailerSrc, id} = item;
 
           return (
             <FilmItem
               imageSrc={imageSrc}
               title={title}
+              trailerSrc={trailerSrc}
               id={id}
               key={id}
             />

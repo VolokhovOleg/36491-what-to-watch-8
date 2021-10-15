@@ -10,3 +10,9 @@ export type InlineStyleType = {[key: string]: string | number};
 export type RouteParams = {
   id: string
 };
+export type FilmCardVideoPlayerConfigType = {
+  autoPlay: boolean,
+  muted: boolean,
+  width: string,
+  style: InlineStyleType
+};
