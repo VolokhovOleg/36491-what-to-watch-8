@@ -6,6 +6,9 @@ export enum Path {
   PLAYER = '/player/:id',
   MY_LIST = '/mylist',
 }
+export enum TabsType {
+  FILM_CARD = 'FILM_CARD'
+}
 export type InlineStyleType = {[key: string]: string | number};
 export type RouteParams = {
   id: string

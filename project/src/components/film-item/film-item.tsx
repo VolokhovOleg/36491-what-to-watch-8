@@ -10,7 +10,7 @@ function FilmItem({imageSrc, title, id, trailerSrc}: Props): JSX.Element {
   const [isActive, setActiveState] = useState<boolean>(false);
   const [timeoutHandle, setTimeoutHandleState] = useState<number | null>(null);
 
-  const onMouseOverFilmHandler = (): void => {
+  const onMouseEnterFilmHandler = (): void => {
     setTimeoutHandleState(window.setTimeout(() => setActiveState(true), DELAY_TO_PLAY_VIDEO));
   };
   const onMouseLeaveFilmHandler = (): void => {
@@ -23,7 +23,7 @@ function FilmItem({imageSrc, title, id, trailerSrc}: Props): JSX.Element {
 
   return (
     <article
-      onMouseOver={onMouseOverFilmHandler}
+      onMouseEnter={onMouseEnterFilmHandler}
       onMouseLeave={onMouseLeaveFilmHandler}
       className="small-film-card catalog__films-card"
     >
