@@ -1,19 +1,29 @@
-import {useState} from 'react';
+import {BaseSyntheticEvent, ComponentType, useState} from 'react';
+import {tabsType} from '../types';
 
-export const withTabs = (Component: (props: (JSX.IntrinsicAttributes & { onActiveChange: (evt: Event) => void; isActive: string})) => JSX.Element) => (props: JSX.IntrinsicAttributes) => {
-  const [isActive, setActive] = useState<string>('0');
+type HOCProps = tabsType;
 
-  const handleActiveChange = (evt: any) => {
-    if (evt.target) {
-      setActive(evt.target.getAttribute('data-id'));
-    }
-  };
+function withTabs<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof HOCProps>> {
+  type ComponentProps = Omit<T, keyof HOCProps>;
 
-  return (
-    <Component
-      {...props}
-      isActive={isActive}
-      onActiveChange={handleActiveChange}
-    />
-  );
+  function WithTabs(props: ComponentProps): JSX.Element {
+    const [activeTab, setActiveTabState] = useState<string>('0');
+
+    const handleActiveChange = (evt: BaseSyntheticEvent) => {
+      if (evt.target) {
+        setActiveTabState(evt.target.getAttribute('data-id'));
+      }
+    };
+
+    return (
+      <Component
+        {...props as T}
+        activeTab={activeTab}
+        onActiveChange={handleActiveChange}
+      />
+    );
+  }
+
+  return WithTabs;
 }
+export default withTabs;

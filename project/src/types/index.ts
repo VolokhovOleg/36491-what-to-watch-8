@@ -1,3 +1,5 @@
+import {MouseEventHandler} from 'react';
+
 export enum Path {
   MAIN = '/',
   LOGIN = '/login',
@@ -7,7 +9,8 @@ export enum Path {
   MY_LIST = '/mylist',
 }
 export enum TabsType {
-  FILM_CARD = 'FILM_CARD'
+  FILM_CARD = 'FILM_CARD',
+  MAIN = 'MAIN',
 }
 export type InlineStyleType = {[key: string]: string | number};
 export type RouteParams = {
@@ -19,3 +22,4 @@ export type FilmCardVideoPlayerConfigType = {
   width: string,
   style: InlineStyleType
 };
+export type tabsType = { onActiveChange: MouseEventHandler<HTMLLIElement>; activeTab: string};

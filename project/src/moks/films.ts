@@ -9,8 +9,20 @@ export type Film = {
   starring: string,
   director: string,
   description: string,
+  score: string,
+  lvl: string,
+  rating: number,
+  runTime: string,
   id: number,
 }
+
+export type Review = {
+  text: string,
+  author: string,
+  date: string,
+  rate: string,
+  id: number | string,
+};
 
 export const films: Film[] = [
   {
@@ -24,9 +36,17 @@ export const films: Film[] = [
     starring: 'Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other',
     director: 'Bill Murray',
     description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.',
+    score: '8.7',
+    lvl: 'Very good',
+    rating: 240,
+    runTime: '1h 40m',
     id: 0,
   },
   {
+    runTime: '1h 40m',
+    score: '8.7',
+    lvl: 'Very good',
+    rating: 240,
     imageSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     genre: 'Drama',
@@ -40,6 +60,10 @@ export const films: Film[] = [
     id: 1,
   },
   {
+    runTime: '1h 40m',
+    score: '8.7',
+    lvl: 'Very good',
+    rating: 240,
     imageSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     genre: 'Drama',
@@ -53,6 +77,10 @@ export const films: Film[] = [
     id: 2,
   },
   {
+    runTime: '1h 40m',
+    score: '8.7',
+    lvl: 'Very good',
+    rating: 240,
     imageSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     genre: 'Drama',
@@ -66,6 +94,10 @@ export const films: Film[] = [
     id: 3,
   },
   {
+    runTime: '1h 40m',
+    score: '8.7',
+    lvl: 'Very good',
+    rating: 240,
     imageSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     genre: 'Drama',
@@ -79,6 +111,10 @@ export const films: Film[] = [
     id: 4,
   },
   {
+    runTime: '1h 40m',
+    score: '8.7',
+    lvl: 'Very good',
+    rating: 240,
     imageSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
     title: 'Fantastic Beasts: The Crimes of Grindelwald',
     genre: 'Drama',
@@ -90,5 +126,28 @@ export const films: Film[] = [
     director: 'Bill Murray',
     description: 'In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s friend and protege.',
     id: 5,
+  },
+];
+export const reviews: Review[] = [
+  {
+    text: 'I didnt find it amusing, and while I can appreciate the creativity, its an hour and 40 minutes I wish I could take back.',
+    author: 'Amanda Greever',
+    date: 'November 18, 2015',
+    rate: '8,0',
+    id: 1,
+  },
+  {
+    text: 'I didnt find it amusing, and while I can appreciate the creativity, its an hour and 40 minutes I wish I could take back.',
+    author: 'Amanda Greever',
+    date: 'November 18, 2015',
+    rate: '8,0',
+    id: 2,
+  },
+  {
+    text: 'I didnt find it amusing, and while I can appreciate the creativity, its an hour and 40 minutes I wish I could take back.',
+    author: 'Amanda Greever',
+    date: 'November 18, 2015',
+    rate: '8,0',
+    id: 3,
   },
 ];

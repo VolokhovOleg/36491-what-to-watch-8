@@ -1,16 +1,21 @@
-import {Film as FilmType} from '../../moks/films';
+import {Film as FilmType, Review} from '../../moks/films';
 import FilmList from '../film-list/film-list';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router';
 import {RouteParams, TabsType} from '../../types';
 import Tabs from '../tabs/tabs';
+import FilmOverview from '../film-overview/film-overview';
+import FilmDetails from '../film-deails/film-details';
+import FilmReviews from '../film-reviews/film-reviews';
 
 type Props = {
-  films: FilmType[]
+  films: FilmType[],
+  reviews: Review[],
 };
 
-function Film({films}: Props): JSX.Element {
+function Film({films, reviews}: Props): JSX.Element {
   const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
+  const [activeTabName, setActiveTabNameState] = useState<string>('');
   const { id } = useParams<RouteParams>();
 
   useEffect(() => {
@@ -81,18 +86,22 @@ function Film({films}: Props): JSX.Element {
                   <nav className="film-nav film-card__nav">
                     <Tabs type={TabsType.FILM_CARD} />
                   </nav>
-                  <div className="film-rating">
-                    <div className="film-rating__score">8,9</div>
-                    <p className="film-rating__meta">
-                      <span className="film-rating__level">Very good</span>
-                      <span className="film-rating__count">240 ratings</span>
-                    </p>
-                  </div>
-                  <div className="film-card__text">
-                    {activeFilm.description}
-                    <p className="film-card__director"><strong>Director: {activeFilm.director}</strong></p>
-                    <p className="film-card__starring"><strong>Starring: {activeFilm.starring}</strong></p>
-                  </div>
+                  <FilmOverview
+                    score={activeFilm.score}
+                    lvl={activeFilm.lvl}
+                    rating={activeFilm.rating}
+                    description={activeFilm.description}
+                    director={activeFilm.director}
+                    starring={activeFilm.starring}
+                  />
+                  <FilmDetails
+                    genre={activeFilm.genre}
+                    release={activeFilm.release}
+                    starring={activeFilm.starring}
+                    director={activeFilm.director}
+                    runTime={activeFilm.runTime}
+                  />
+                  <FilmReviews reviews={reviews} />
                 </div>
               </div>
             </div>

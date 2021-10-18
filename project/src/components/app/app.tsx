@@ -3,7 +3,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import Film from '../film/film';
-import {Film as FilmType} from '../../moks/films';
+import {Film as FilmType, Review} from '../../moks/films';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import Error from '../error/error';
@@ -12,9 +12,10 @@ import {Path} from '../../types';
 
 type Props = {
   films: FilmType[]
+  reviews: Review[]
 };
 
-function App({films}: Props): JSX.Element {
+function App({films, reviews}: Props): JSX.Element {
   return (
     <BrowserRouter>
       <Switch>
@@ -29,6 +30,7 @@ function App({films}: Props): JSX.Element {
         <Route path={Path.FILMS} exact>
           <Film
             films={films}
+            reviews={reviews}
           />
         </Route>
         <Route path={Path.ADD_REVIEW} exact>
