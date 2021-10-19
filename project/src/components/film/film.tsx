@@ -2,7 +2,7 @@ import {Film as FilmType, Review} from '../../moks/films';
 import FilmList from '../film-list/film-list';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router';
-import {RouteParams, TabsType} from '../../types';
+import {RouteParams, TabNameType, TabsType} from '../../types';
 import Tabs from '../tabs/tabs';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetails from '../film-deails/film-details';
@@ -15,8 +15,49 @@ type Props = {
 
 function Film({films, reviews}: Props): JSX.Element {
   const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
-  const [activeTabName, setActiveTabNameState] = useState<string>('');
+  const [activeTabName, setActiveTabNameState] = useState<TabNameType>(TabNameType.OVERVIEW);
   const { id } = useParams<RouteParams>();
+
+  const setFilmContentInfo = (TabName: TabNameType): JSX.Element | null => {
+    if (activeFilm) {
+      const {genre, release, starring, director, runTime, score, lvl, rating, description} = activeFilm;
+
+      switch (TabName) {
+        case TabNameType.DETAILS:
+          return (
+            <FilmDetails
+              genre={genre}
+              release={release}
+              starring={starring}
+              director={director}
+              runTime={runTime}
+            />
+          );
+        case TabNameType.OVERVIEW:
+          return (
+            <FilmOverview
+              score={score}
+              lvl={lvl}
+              rating={rating}
+              description={description}
+              director={director}
+              starring={starring}
+            />
+          );
+        case TabNameType.REVIEWS:
+          return (
+            <FilmReviews reviews={reviews} />
+          );
+        default:
+          return null;
+      }
+    }
+
+    return null;
+  };
+  const onChangeActiveTabHandler = (TabName: TabNameType): void => {
+    setActiveTabNameState(TabName);
+  };
 
   useEffect(() => {
     setActiveFilm(films.find((item: FilmType) => item.id.toString() === id) || null);
@@ -84,24 +125,12 @@ function Film({films, reviews}: Props): JSX.Element {
                 </div>
                 <div className="film-card__desc">
                   <nav className="film-nav film-card__nav">
-                    <Tabs type={TabsType.FILM_CARD} />
+                    <Tabs
+                      type={TabsType.FILM_CARD}
+                      onChangeTabHandler={onChangeActiveTabHandler}
+                    />
                   </nav>
-                  <FilmOverview
-                    score={activeFilm.score}
-                    lvl={activeFilm.lvl}
-                    rating={activeFilm.rating}
-                    description={activeFilm.description}
-                    director={activeFilm.director}
-                    starring={activeFilm.starring}
-                  />
-                  <FilmDetails
-                    genre={activeFilm.genre}
-                    release={activeFilm.release}
-                    starring={activeFilm.starring}
-                    director={activeFilm.director}
-                    runTime={activeFilm.runTime}
-                  />
-                  <FilmReviews reviews={reviews} />
+                  {setFilmContentInfo(activeTabName)}
                 </div>
               </div>
             </div>
