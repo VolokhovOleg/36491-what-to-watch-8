@@ -16,10 +16,10 @@ const mapStateToProps = ({filteredFilmFromGenre, films}: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  setActiveGenre(genre: string) {
+  changeActiveGenre(genre: string) {
     dispatch(setActiveGenre(genre));
   },
-  setFilteredFilmsFromGenre(films: Film[]) {
+  filterOutFilms(films: Film[]) {
     dispatch(setFilteredFilmsFromGenre(films));
   },
 });
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
 function Main(props: Props): JSX.Element {
-  const {filteredFilmFromGenre, films} = props;
+  const {filteredFilmFromGenre, films, changeActiveGenre, filterOutFilms} = props;
   const [filmCard, setFilmCardState] = useState<Film | null>(null);
   const [activeGenre, setActiveGenreState] = useState<string>(ALL_GENRES);
   const [genres, setGenresState] = useState<string[] | null>(null);
@@ -41,8 +41,8 @@ function Main(props: Props): JSX.Element {
     setGenresState([...new Set([ALL_GENRES, ...films.map((item) => item.genre)])]);
   }, []);
   useEffect(() => {
-    setActiveGenre(activeGenre);
-    setFilteredFilmsFromGenre(films);
+    changeActiveGenre(activeGenre);
+    filterOutFilms(films);
   }, [activeGenre]);
 
   return (
