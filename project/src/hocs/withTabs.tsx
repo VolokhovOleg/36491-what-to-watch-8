@@ -1,6 +1,5 @@
 import {BaseSyntheticEvent, ComponentType, useState} from 'react';
-import {onChangeTabsHandlerType, tabsType} from '../types';
-import {FILM_DETAILS_TAB_NAMES} from '../consts';
+import {onChangeTabsHandlerType, TabsNames, tabsType} from '../types';
 
 type HOCProps = tabsType;
 
@@ -10,12 +9,12 @@ function withTabs<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof H
   function WithTabs(props: ComponentProps): JSX.Element {
     const [activeTab, setActiveTabState] = useState<string>('0');
 
-    const handleActiveChange = (evt: BaseSyntheticEvent, onChangeTabHandler: onChangeTabsHandlerType) => {
+    const handleActiveChange = (evt: BaseSyntheticEvent, onChangeTabHandler: onChangeTabsHandlerType, tabsName: TabsNames) => {
       if (evt.target) {
         const id: string = evt.target.getAttribute('data-id');
 
         setActiveTabState(id);
-        onChangeTabHandler(FILM_DETAILS_TAB_NAMES[parseInt(id, 10)]);
+        onChangeTabHandler(tabsName[parseInt(id, 10)]);
       }
     };
 
@@ -23,7 +22,10 @@ function withTabs<T>(Component: ComponentType<T>): ComponentType<Omit<T, keyof H
       <Component
         {...props as T}
         activeTab={activeTab}
-        onActiveChange={(evt: BaseSyntheticEvent, onChangeTabHandler: onChangeTabsHandlerType) => handleActiveChange(evt, onChangeTabHandler)}
+        onActiveChange={
+          (evt: BaseSyntheticEvent, onChangeTabHandler: onChangeTabsHandlerType, tabsName: TabsNames ) =>
+            handleActiveChange(evt, onChangeTabHandler, tabsName)
+        }
       />
     );
   }

@@ -1,13 +1,16 @@
-import {onChangeTabsHandlerType, TabsType} from '../../types';
+import {onChangeTabsHandlerType, TabsNames, TabsType} from '../../types';
 import FilmDetailsTabs from '../film-details-tabs/film-details-tabs';
+import GenreTabs from '../genre-tabs/genre-tabs';
 
-type Props = { type: TabsType, onChangeTabHandler: onChangeTabsHandlerType};
+type Props = { type: TabsType, onChangeTabHandler: onChangeTabsHandlerType, tabsNames: TabsNames};
 
-function Tabs({type, onChangeTabHandler}: Props): JSX.Element {
+function Tabs({type, tabsNames, onChangeTabHandler}: Props): JSX.Element {
   const pickTabs = (tabsType: TabsType): JSX.Element | null => {
     switch (tabsType) {
       case TabsType.FILM_CARD:
-        return <FilmDetailsTabs onChangeTabHandler={onChangeTabHandler} />;
+        return <FilmDetailsTabs onChangeTabHandler={onChangeTabHandler} tabsNames={tabsNames}/>;
+      case TabsType.GENRE:
+        return <GenreTabs onChangeTabHandler={onChangeTabHandler} tabsNames={tabsNames}/>;
       default:
         return null;
     }

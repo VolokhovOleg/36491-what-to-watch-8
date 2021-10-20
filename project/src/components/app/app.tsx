@@ -11,7 +11,7 @@ import PrivateRoute from '../private-router/private-router';
 import {Path} from '../../types';
 
 type Props = {
-  films: FilmType[]
+  films: FilmType[],
   reviews: Review[]
 };
 
@@ -20,9 +20,7 @@ function App({films, reviews}: Props): JSX.Element {
     <BrowserRouter>
       <Switch>
         <Route path={Path.MAIN} exact>
-          <Main
-            films={films}
-          />
+          <Main />
         </Route>
         <Route path={Path.LOGIN} exact>
           <SignIn />

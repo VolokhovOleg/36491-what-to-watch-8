@@ -1,17 +1,49 @@
 import {useEffect, useState} from 'react';
-import {Film as FilmType, Film} from '../../moks/films';
+import {Film} from '../../moks/films';
 import FilmList from '../film-list/film-list';
+import {Actions, State, TabsType} from '../../types';
+import {connect, ConnectedProps} from 'react-redux';
+import {Dispatch} from '@reduxjs/toolkit';
+import {setActiveGenre, setFilteredFilmsFromGenre} from '../../store/action';
+import Tabs from '../tabs/tabs';
+import {ALL_GENRES} from '../../consts';
 
-type Props = {
-  films: FilmType[]
-};
+type Props = ConnectedProps<typeof connector>;
 
-function Main({films}: Props): JSX.Element {
+const mapStateToProps = ({filteredFilmFromGenre, films}: State) => ({
+  filteredFilmFromGenre,
+  films,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
+  setActiveGenre(genre: string) {
+    dispatch(setActiveGenre(genre));
+  },
+  setFilteredFilmsFromGenre(films: Film[]) {
+    dispatch(setFilteredFilmsFromGenre(films));
+  },
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+function Main(props: Props): JSX.Element {
+  const {filteredFilmFromGenre, films} = props;
   const [filmCard, setFilmCardState] = useState<Film | null>(null);
+  const [activeGenre, setActiveGenreState] = useState<string>(ALL_GENRES);
+  const [genres, setGenresState] = useState<string[] | null>(null);
+
+  const onChangeGenreTabHandler = (tabName: string) => {
+    setActiveGenreState(tabName);
+  };
 
   useEffect(() => {
-    setFilmCardState(films[0]);
+    setFilmCardState(filteredFilmFromGenre[0]);
+    setGenresState([...new Set([ALL_GENRES, ...films.map((item) => item.genre)])]);
   }, []);
+  useEffect(() => {
+    setActiveGenre(activeGenre);
+    setFilteredFilmsFromGenre(films);
+  }, [activeGenre]);
 
   return (
     <>
@@ -81,39 +113,11 @@ function Main({films}: Props): JSX.Element {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids &amp; Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
-          </ul>
-          <FilmList films={films}/>
+          {
+            genres &&
+            <Tabs type={TabsType.GENRE} onChangeTabHandler={onChangeGenreTabHandler} tabsNames={genres} />
+          }
+          <FilmList films={filteredFilmFromGenre}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
@@ -134,4 +138,5 @@ function Main({films}: Props): JSX.Element {
     </>);
 }
 
-export default Main;
+export {Main};
+export default connector(Main);

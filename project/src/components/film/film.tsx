@@ -7,6 +7,7 @@ import Tabs from '../tabs/tabs';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetails from '../film-deails/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
+import {FILM_DETAILS_TAB_NAMES} from '../../consts';
 
 type Props = {
   films: FilmType[],
@@ -15,10 +16,10 @@ type Props = {
 
 function Film({films, reviews}: Props): JSX.Element {
   const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
-  const [activeTabName, setActiveTabNameState] = useState<TabNameType>(TabNameType.OVERVIEW);
+  const [activeTabName, setActiveTabNameState] = useState<TabNameType | string>(TabNameType.OVERVIEW);
   const { id } = useParams<RouteParams>();
 
-  const setFilmContentInfo = (TabName: TabNameType): JSX.Element | null => {
+  const setFilmContentInfo = (TabName: TabNameType | string): JSX.Element | null => {
     if (activeFilm) {
       const {genre, release, starring, director, runTime, score, lvl, rating, description} = activeFilm;
 
@@ -55,7 +56,7 @@ function Film({films, reviews}: Props): JSX.Element {
 
     return null;
   };
-  const onChangeActiveTabHandler = (TabName: TabNameType): void => {
+  const onChangeActiveTabHandler = (TabName: TabNameType | string): void => {
     setActiveTabNameState(TabName);
   };
 
@@ -97,8 +98,8 @@ function Film({films, reviews}: Props): JSX.Element {
                 <div className="film-card__desc">
                   <h2 className="film-card__title">{activeFilm.title}</h2>
                   <p className="film-card__meta">
-                    <span className="film-card__genre">Drama</span>
-                    <span className="film-card__year">2014</span>
+                    <span className="film-card__genre">{activeFilm.genre}</span>
+                    <span className="film-card__year">{activeFilm.release}</span>
                   </p>
                   <div className="film-card__buttons">
                     <button className="btn btn--play film-card__button" type="button">
@@ -127,6 +128,7 @@ function Film({films, reviews}: Props): JSX.Element {
                   <nav className="film-nav film-card__nav">
                     <Tabs
                       type={TabsType.FILM_CARD}
+                      tabsNames={FILM_DETAILS_TAB_NAMES}
                       onChangeTabHandler={onChangeActiveTabHandler}
                     />
                   </nav>
