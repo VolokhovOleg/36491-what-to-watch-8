@@ -1,7 +1,7 @@
-import {Film as FilmType} from '../../moks/films';
+import {Film as FilmType} from '../../types/films';
 import {useParams} from 'react-router';
 import {useEffect, useState} from 'react';
-import {RouteParams} from '../../types';
+import {RouteParams} from '../../types/route';
 
 type Props = {
   films: FilmType[]

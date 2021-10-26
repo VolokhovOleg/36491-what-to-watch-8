@@ -1,4 +1,4 @@
-import {onChangeTabsHandlerType, TabsNames, tabsType} from '../../types';
+import {onChangeTabsHandlerType, TabsNames, tabsType} from '../../types/tabs';
 import withTabs from '../../hocs/withTabs';
 import {SyntheticEvent} from 'react';
 

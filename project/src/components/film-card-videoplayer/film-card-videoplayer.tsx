@@ -1,6 +1,6 @@
 import VideoPlayer from '../videoplayer/videoplayer';
-import {Film} from '../../moks/films';
-import {FilmCardVideoPlayerConfigType} from '../../types';
+import {Film} from '../../types/films';
+import {FilmCardVideoPlayerConfigType} from '../../types/films';
 
 type Props = JSX.IntrinsicAttributes & Pick<Film, 'imageSrc' | 'trailerSrc'>;
 

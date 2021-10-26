@@ -1,5 +1,5 @@
 import {BaseSyntheticEvent, ComponentType, useState} from 'react';
-import {onChangeTabsHandlerType, TabsNames, tabsType} from '../types';
+import {onChangeTabsHandlerType, TabsNames, tabsType} from '../types/tabs';
 
 type HOCProps = tabsType;
 

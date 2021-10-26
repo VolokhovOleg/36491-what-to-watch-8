@@ -1,17 +1,24 @@
-import {Actions, ActionType, State} from '../types';
-import {films} from '../moks/films';
+import {Actions, ActionType} from '../types/actions';
+import {State} from '../types/store';
 import {ALL_GENRES} from '../consts';
+import {AuthorizationStatus} from '../types/api';
 
 const initialState = {
-  genre: '',
-  films: films,
-  filteredFilmFromGenre: films,
+  genre: ALL_GENRES,
+  films: [],
+  filteredFilmFromGenre: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
   switch (action.type) {
     case ActionType.SetActiveGenre:
       return {...state, genre: action.payload};
+    case ActionType.SetFilms:
+      return {
+        ...state,
+        films: action.payload.films,
+      };
     case ActionType.SetFilteredFilmsFromGenre:
       return {
         ...state,

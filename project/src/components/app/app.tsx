@@ -3,47 +3,58 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import Film from '../film/film';
-import {Film as FilmType, Review} from '../../moks/films';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import Error from '../error/error';
 import PrivateRoute from '../private-router/private-router';
-import {Path} from '../../types';
+import {Path} from '../../types/route';
+import {connect, ConnectedProps} from 'react-redux';
+import {State} from '../../types/store';
 
-type Props = {
-  films: FilmType[],
-  reviews: Review[]
-};
+type Props = ConnectedProps<typeof connector>;
 
-function App({films, reviews}: Props): JSX.Element {
+const mapStateToProps = ({films}: State) => ({
+  films
+});
+
+const connector = connect(mapStateToProps, null);
+
+function App(props: Props): JSX.Element {
+  const {films} = props;
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path={Path.MAIN} exact>
-          <Main />
-        </Route>
-        <Route path={Path.LOGIN} exact>
-          <SignIn />
-        </Route>
-        <Route path={Path.FILMS} exact>
-          <Film
-            films={films}
-            reviews={reviews}
-          />
-        </Route>
-        <Route path={Path.ADD_REVIEW} exact>
-          <AddReview films={films} />
-        </Route>
-        <Route path={Path.PLAYER} exact>
-          <Player films={films}/>
-        </Route>
-        <PrivateRoute path={Path.MY_LIST} exact component={() => <MyList films={films} />} />
-        <Route>
-          <Error />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <>
+      {
+        films &&
+        <BrowserRouter>
+          <Switch>
+            <Route path={Path.MAIN} exact>
+              <Main />
+            </Route>
+            <Route path={Path.LOGIN} exact>
+              <SignIn />
+            </Route>
+            <Route path={Path.FILMS} exact>
+              <Film
+                films={[]}
+                reviews={[]}
+              />
+            </Route>
+            <Route path={Path.ADD_REVIEW} exact>
+              <AddReview films={[]} />
+            </Route>
+            <Route path={Path.PLAYER} exact>
+              <Player films={[]}/>
+            </Route>
+            <PrivateRoute path={Path.MY_LIST} exact component={() => <MyList films={[]} />} />
+            <Route>
+              <Error />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      }
+    </>
+
   );
 }
-
-export default App;
+export {App};
+export default connector(App);

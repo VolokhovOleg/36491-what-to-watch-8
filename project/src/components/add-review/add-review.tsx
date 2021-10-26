@@ -1,19 +1,19 @@
-import {Film as FilmType} from '../../moks/films';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router';
-import {RouteParams} from '../../types';
 import AddReviewForm from '../add-review-form/add-review-form';
+import {RouteParams} from '../../types/route';
+import {Film} from '../../types/films';
 
 type Props = {
-  films: FilmType[]
+  films: Film[]
 };
 
 function AddReview({films}: Props): JSX.Element {
-  const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
+  const [activeFilm, setActiveFilm] = useState<Film | null>(null);
   const { id } = useParams<RouteParams>();
 
   useEffect(() => {
-    setActiveFilm(films.find((item: FilmType) => item.id.toString() === id) || null);
+    setActiveFilm(films.find((item: Film) => item.id.toString() === id) || null);
   }, []);
 
   return (

@@ -1,6 +1,5 @@
 import {useRef} from 'react';
-import {FilmCardVideoPlayerConfigType} from '../../types';
-import {Film} from '../../moks/films';
+import {FilmCardVideoPlayerConfigType, Film} from '../../types/films';
 
 type Props = {
   playerConfig: FilmCardVideoPlayerConfigType

@@ -1,4 +1,4 @@
-import {Review} from '../../moks/films';
+import {Review} from '../../types/films';
 
 type Props = Omit<Review, 'id'>;
 

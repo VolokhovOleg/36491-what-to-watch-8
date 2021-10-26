@@ -1,13 +1,14 @@
-import {Film as FilmType, Review} from '../../moks/films';
+import {Film as FilmType, Review} from '../../types/films';
 import FilmList from '../film-list/film-list';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router';
-import {RouteParams, TabNameType, TabsType} from '../../types';
 import Tabs from '../tabs/tabs';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetails from '../film-deails/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
 import {FILM_DETAILS_TAB_NAMES} from '../../consts';
+import {TabNameType, TabsType} from '../../types/tabs';
+import {RouteParams} from '../../types/route';
 
 type Props = {
   films: FilmType[],

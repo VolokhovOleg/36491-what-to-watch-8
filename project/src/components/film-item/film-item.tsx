@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {Film} from '../../moks/films';
+import {Film} from '../../types/films';
 import {DELAY_TO_PLAY_VIDEO} from '../../consts';
 import FilmCardVideoPlayer from '../film-card-videoplayer/film-card-videoplayer';
 

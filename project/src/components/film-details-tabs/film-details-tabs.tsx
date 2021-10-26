@@ -1,5 +1,5 @@
 import withTabs from '../../hocs/withTabs';
-import {onChangeTabsHandlerType, TabsNames, tabsType} from '../../types';
+import {onChangeTabsHandlerType, TabsNames, tabsType} from '../../types/tabs';
 import {SyntheticEvent} from 'react';
 
 type Props = JSX.IntrinsicAttributes & tabsType & {onChangeTabHandler: onChangeTabsHandlerType, tabsNames: TabsNames};

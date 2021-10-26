@@ -1,4 +1,4 @@
-import {Film} from '../../moks/films';
+import {Film} from '../../types/films';
 
 type Props = Pick<Film, 'score' | 'lvl' | 'rating' | 'description' | 'director' | 'starring'>;
 

@@ -1,4 +1,4 @@
-import {Review} from '../../moks/films';
+import {Review} from '../../types/films';
 import FilmReviewItem from '../film-review-item/film-review-item';
 
 type Props = {reviews: Review[]}

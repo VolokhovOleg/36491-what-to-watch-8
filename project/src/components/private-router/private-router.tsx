@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Redirect, RouteProps} from 'react-router-dom';
-import {Path} from '../../types';
+import {Path} from '../../types/route';
 
 type Props = RouteProps & {
   component: () => JSX.Element;

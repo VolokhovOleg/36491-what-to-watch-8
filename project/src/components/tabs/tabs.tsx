@@ -1,4 +1,4 @@
-import {onChangeTabsHandlerType, TabsNames, TabsType} from '../../types';
+import {onChangeTabsHandlerType, TabsNames, TabsType} from '../../types/tabs';
 import FilmDetailsTabs from '../film-details-tabs/film-details-tabs';
 import GenreTabs from '../genre-tabs/genre-tabs';
 

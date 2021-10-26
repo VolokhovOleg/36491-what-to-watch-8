@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
-import {Film} from '../../moks/films';
+import {Film} from '../../types/films';
 import FilmList from '../film-list/film-list';
-import {Actions, State, TabsType} from '../../types';
+import {TabsType} from '../../types/tabs';
+import {Actions} from '../../types/actions';
+import {State} from '../../types/store';
 import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from '@reduxjs/toolkit';
 import {setActiveGenre, setFilteredFilmsFromGenre} from '../../store/action';
@@ -13,7 +15,7 @@ type Props = ConnectedProps<typeof connector>;
 
 const mapStateToProps = ({filteredFilmFromGenre, films}: State) => ({
   filteredFilmFromGenre,
-  films,
+  films
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -22,7 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   },
   filterOutFilms(films: Film[]) {
     dispatch(setFilteredFilmsFromGenre(films));
-  },
+  }
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -44,7 +46,7 @@ function Main(props: Props): JSX.Element {
 
   useEffect(() => {
     setFilmCardState(filteredFilmFromGenre[0]);
-    setGenresState([...new Set([ALL_GENRES, ...films.map((item) => item.genre)])]);
+    setGenresState([...new Set([ALL_GENRES, ...films.map((item: any) => item.genre)])]);
   }, []);
   useEffect(() => {
     changeActiveGenre(activeGenre);
