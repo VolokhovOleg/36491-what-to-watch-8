@@ -8,7 +8,7 @@ import {reducer} from './store/reducer';
 import {applyMiddleware, createStore} from '@reduxjs/toolkit';
 import {createAPI} from './services/api';
 import {requireAuthorization} from './store/action';
-import {AuthorizationStatus} from './types/api'
+import {AuthorizationStatus} from './types/api';
 import {ThunkAppDispatch} from './types/actions';
 import {loadFilms} from './store/api-actions';
 
@@ -19,7 +19,7 @@ const api = createAPI(
 const store = createStore(
   reducer,
   composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(api))
+    applyMiddleware(thunk.withExtraArgument(api)),
   ),
 );
 
@@ -28,10 +28,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/*@ts-ignore*/}
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 

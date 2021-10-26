@@ -7,3 +7,10 @@ export const AUTH_TOKEN_KEY_NAME = 'wtw-token';
 export const BACKEND_URL = 'https://8.react.pages.academy/wtw';
 export const REQUEST_TIMEOUT = 5000;
 export const FILM_DETAILS_TAB_NAMES = [TabNameType.OVERVIEW, TabNameType.DETAILS, TabNameType.REVIEWS] as const;
+export enum RatingInWord {
+  BAD = 'Bad',
+  NORMAL = 'Normal',
+  GOOD = 'Good',
+  VERY_GOOD = 'Very good',
+  AWESOME = 'Awesome',
+}

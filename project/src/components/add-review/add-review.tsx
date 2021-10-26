@@ -56,7 +56,7 @@ function AddReview({films}: Props): JSX.Element {
               </ul>
             </header>
             <div className="film-card__poster film-card__poster--small">
-              <img src={activeFilm.imageSrc} alt={activeFilm.title} width={218} height={327} />
+              <img src={activeFilm.posterSrc} alt={activeFilm.title} width={218} height={327} />
             </div>
           </div>
           <div className="add-review">

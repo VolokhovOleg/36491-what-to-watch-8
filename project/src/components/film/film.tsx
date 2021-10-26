@@ -73,7 +73,7 @@ function Film({films, reviews}: Props): JSX.Element {
           <section className="film-card film-card--full">
             <div className="film-card__hero">
               <div className="film-card__bg">
-                <img src={activeFilm.imageSrc} alt={activeFilm.title} />
+                <img src={activeFilm.bgImage} alt={activeFilm.title} />
               </div>
               <h1 className="visually-hidden">WTW</h1>
               <header className="page-header film-card__head">
@@ -123,7 +123,7 @@ function Film({films, reviews}: Props): JSX.Element {
             <div className="film-card__wrap film-card__translate-top">
               <div className="film-card__info">
                 <div className="film-card__poster film-card__poster--big">
-                  <img src={activeFilm.imageSrc} alt={activeFilm.title} width={218} height={327} />
+                  <img src={activeFilm.posterSrc} alt={activeFilm.title} width={218} height={327} />
                 </div>
                 <div className="film-card__desc">
                   <nav className="film-nav film-card__nav">

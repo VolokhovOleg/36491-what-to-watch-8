@@ -15,7 +15,7 @@ type Props = ConnectedProps<typeof connector>;
 
 const mapStateToProps = ({filteredFilmFromGenre, films}: State) => ({
   filteredFilmFromGenre,
-  films
+  films,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
   },
   filterOutFilms(films: Film[]) {
     dispatch(setFilteredFilmsFromGenre(films));
-  }
+  },
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -59,7 +59,7 @@ function Main(props: Props): JSX.Element {
         filmCard &&
         <section className="film-card">
           <div className="film-card__bg">
-            <img src={filmCard.imageSrc} alt={`${filmCard.title} poster`}/>
+            <img src={filmCard.bgImage} alt={`${filmCard.title} poster`}/>
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
@@ -84,7 +84,7 @@ function Main(props: Props): JSX.Element {
           <div className="film-card__wrap">
             <div className="film-card__info">
               <div className="film-card__poster">
-                <img src={filmCard.imageSrc} alt={`${filmCard.title} poster`} width={218} height={327}/>
+                <img src={filmCard.posterSrc} alt={`${filmCard.title} poster`} width={218} height={327}/>
               </div>
               <div className="film-card__desc">
                 <h2 className="film-card__title">

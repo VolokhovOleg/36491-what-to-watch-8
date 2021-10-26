@@ -16,6 +16,7 @@ function VideoPlayer({trailerSrc, imageSrc, playerConfig}: Props): JSX.Element {
       {...playerConfig}
     >
       <source src={trailerSrc} type="video/webm"  />
+      <source src={trailerSrc} type="video/mp4"  />
     </video>
   );
 }
