@@ -1,4 +1,4 @@
-import {setActiveGenre, setFilms, setFilteredFilmsFromGenre} from '../../store/action';
+import {requireAuthorization, setActiveGenre, setFilms, setFilteredFilmsFromGenre} from '../../store/action';
 import {ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import {State} from '../store';
@@ -13,5 +13,6 @@ export type Actions =
   | ReturnType<typeof setActiveGenre>
   | ReturnType<typeof setFilteredFilmsFromGenre>
   | ReturnType<typeof setFilms>
+  | ReturnType<typeof requireAuthorization>
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
 export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;

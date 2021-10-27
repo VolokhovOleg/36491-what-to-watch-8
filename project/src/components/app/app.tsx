@@ -46,7 +46,13 @@ function App(props: Props): JSX.Element {
             <Route path={Path.PLAYER} exact>
               <Player films={films}/>
             </Route>
-            <PrivateRoute path={Path.MY_LIST} exact component={() => <MyList films={films} />} />
+            <PrivateRoute
+              exact
+              path={Path.MY_LIST}
+              render={() => (
+                <MyList films={films} />
+              )}
+            />
             <Route>
               <Error />
             </Route>

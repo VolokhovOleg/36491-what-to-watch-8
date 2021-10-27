@@ -14,3 +14,8 @@ export enum RatingInWord {
   VERY_GOOD = 'Very good',
   AWESOME = 'Awesome',
 }
+export enum HeaderType {
+  DEFAULT = 'DEFAULT',
+  SIGN_IN = 'SIGN_IN',
+  MY_LIST = 'MY_LIST',
+}

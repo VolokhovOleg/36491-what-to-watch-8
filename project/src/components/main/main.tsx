@@ -8,8 +8,9 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Dispatch} from '@reduxjs/toolkit';
 import {setActiveGenre, setFilteredFilmsFromGenre} from '../../store/action';
 import Tabs from '../tabs/tabs';
-import {ALL_GENRES, STEP_FILM_AMOUNT} from '../../consts';
+import {ALL_GENRES, HeaderType, STEP_FILM_AMOUNT} from '../../consts';
 import ShowMoreBtn from '../showe-more-btn/show-more-btn';
+import Header from '../header/header';
 
 type Props = ConnectedProps<typeof connector>;
 
@@ -62,25 +63,7 @@ function Main(props: Props): JSX.Element {
             <img src={filmCard.bgImage} alt={`${filmCard.title} poster`}/>
           </div>
           <h1 className="visually-hidden">WTW</h1>
-          <header className="page-header film-card__head">
-            <div className="logo">
-              <a className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width={63} height={63}/>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
-          </header>
+          <Header headerType={HeaderType.DEFAULT} />
           <div className="film-card__wrap">
             <div className="film-card__info">
               <div className="film-card__poster">

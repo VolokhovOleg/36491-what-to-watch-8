@@ -26,6 +26,11 @@ const reducer = (state: State = initialState, action: Actions): State => {
           ? action.payload.filter((item) => item.genre === state.genre)
           : state.films,
       };
+    case ActionType.RequireAuthorization:
+      return {
+        ...state,
+        authorizationStatus: state.authorizationStatus,
+      };
     default:
       return state;
   }
