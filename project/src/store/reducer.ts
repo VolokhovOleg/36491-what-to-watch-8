@@ -8,6 +8,7 @@ const initialState = {
   films: [],
   filteredFilmFromGenre: [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  user: null,
 };
 
 const reducer = (state: State = initialState, action: Actions): State => {
@@ -29,7 +30,7 @@ const reducer = (state: State = initialState, action: Actions): State => {
     case ActionType.RequireAuthorization:
       return {
         ...state,
-        authorizationStatus: state.authorizationStatus,
+        authorizationStatus: action.payload,
       };
     default:
       return state;

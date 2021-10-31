@@ -10,7 +10,7 @@ import {createAPI} from './services/api';
 import {requireAuthorization} from './store/action';
 import {AuthorizationStatus} from './types/api';
 import {ThunkAppDispatch} from './types/actions';
-import {loadFilms} from './store/api-actions';
+import {checkAuthAction, loadFilms} from './store/api-actions';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth)),
@@ -24,6 +24,7 @@ const store = createStore(
 );
 
 (store.dispatch as ThunkAppDispatch)(loadFilms());
+(store.dispatch as ThunkAppDispatch)(checkAuthAction());
 
 ReactDOM.render(
   <React.StrictMode>
@@ -33,4 +34,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root'),
 );
-
