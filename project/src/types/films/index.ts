@@ -21,7 +21,8 @@ export type Film = {
   starring: string[],
   lvl: RatingInWord | null,
   value: string,
-}
+};
+export type Films = Film[] | [];
 export type RawFilm = {
   name: string,
   ['poster_image']: string,

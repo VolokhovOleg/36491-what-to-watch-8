@@ -1,9 +1,9 @@
-import {Film} from '../films';
-import {AuthorizationStatus} from '../api';
+import {Films} from '../films';
+import {RootState} from '../../store/root-reducer';
 
-export type State = {
-  films: Film[] ,
-  filteredFilmFromGenre: Film[],
-  genre: string,
-  authorizationStatus: AuthorizationStatus,
+export type FilmsState = {
+  films: Films,
+  filteredFilmsFromGenre: Films,
 };
+
+export type State = RootState;

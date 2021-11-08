@@ -1,7 +1,7 @@
-import {requireAuthorization, setActiveGenre, setFilms, setFilteredFilmsFromGenre} from '../../store/action';
-import {ThunkAction, ThunkDispatch} from '@reduxjs/toolkit';
-import {AxiosInstance} from 'axios';
+import {Action, createAction, ThunkAction} from '@reduxjs/toolkit';
+import {Films} from '../films';
 import {State} from '../store';
+import {AxiosInstance} from 'axios';
 
 export enum ActionType {
   SetActiveGenre = 'SET_ACTIVE_GENRE',
@@ -9,10 +9,17 @@ export enum ActionType {
   SetFilms = 'SET_FILMS',
   RequireAuthorization = 'REQUIRED_AUTHORIZATION',
 }
-export type Actions =
-  | ReturnType<typeof setActiveGenre>
-  | ReturnType<typeof setFilteredFilmsFromGenre>
-  | ReturnType<typeof setFilms>
-  | ReturnType<typeof requireAuthorization>
-export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Actions>;
-export type ThunkAppDispatch = ThunkDispatch<State, AxiosInstance, Actions>;
+
+export const setFilms = createAction(
+  ActionType.SetFilms,
+  (films: Films) => ({
+    payload: films,
+  }),
+);
+export const setFilteredFilmsFromGenre = createAction(
+  ActionType.SetFilteredFilmsFromGenre,
+  (filteredFilmsFromGenre: Films) => ({
+    payload: filteredFilmsFromGenre,
+  }),
+);
+export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

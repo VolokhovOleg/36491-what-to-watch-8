@@ -1,37 +1,21 @@
 import {useEffect, useState} from 'react';
-import {Film} from '../../types/films';
+import {Film, Films} from '../../types/films';
 import FilmList from '../film-list/film-list';
 import {TabsType} from '../../types/tabs';
-import {Actions} from '../../types/actions';
-import {State} from '../../types/store';
-import {connect, ConnectedProps} from 'react-redux';
-import {Dispatch} from '@reduxjs/toolkit';
-import {setActiveGenre, setFilteredFilmsFromGenre} from '../../store/action';
 import Tabs from '../tabs/tabs';
 import {ALL_GENRES, HeaderType, STEP_FILM_AMOUNT} from '../../consts';
 import ShowMoreBtn from '../showe-more-btn/show-more-btn';
 import Header from '../header/header';
+import {useDispatch, useSelector} from 'react-redux';
+import {State} from '../../types/store';
+import {getFilms, getFilteredFilmsFromGenre} from '../../store/films/selectors';
+import {setFilteredFilms} from '../../store/api-actions';
 
-type Props = ConnectedProps<typeof connector>;
+function Main(): JSX.Element {
+  const films = useSelector<State, Films>(getFilms);
+  const filteredFilmFromGenre = useSelector<State, Films>(getFilteredFilmsFromGenre);
+  const dispatch = useDispatch();
 
-const mapStateToProps = ({filteredFilmFromGenre, films}: State) => ({
-  filteredFilmFromGenre,
-  films,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>) => ({
-  changeActiveGenre(genre: string) {
-    dispatch(setActiveGenre(genre));
-  },
-  filterOutFilms(films: Film[]) {
-    dispatch(setFilteredFilmsFromGenre(films));
-  },
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-function Main(props: Props): JSX.Element {
-  const {filteredFilmFromGenre, films, changeActiveGenre, filterOutFilms} = props;
   const [filmCard, setFilmCardState] = useState<Film | null>(null);
   const [activeGenre, setActiveGenreState] = useState<string>(ALL_GENRES);
   const [genres, setGenresState] = useState<string[] | null>(null);
@@ -47,11 +31,10 @@ function Main(props: Props): JSX.Element {
 
   useEffect(() => {
     setFilmCardState(filteredFilmFromGenre[0]);
-    setGenresState([...new Set([ALL_GENRES, ...films.map((item: any) => item.genre)])]);
+    setGenresState([...new Set([ALL_GENRES, ...films.map((item: Film) => item.genre)])]);
   }, []);
   useEffect(() => {
-    changeActiveGenre(activeGenre);
-    filterOutFilms(films);
+    dispatch(setFilteredFilms(activeGenre));
   }, [activeGenre]);
 
   return (
@@ -130,5 +113,4 @@ function Main(props: Props): JSX.Element {
     </>);
 }
 
-export {Main};
-export default connector(Main);
+export default Main;
