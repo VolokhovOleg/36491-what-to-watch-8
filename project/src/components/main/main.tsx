@@ -30,7 +30,7 @@ function Main(): JSX.Element {
   };
 
   useEffect(() => {
-    setFilmCardState(filteredFilmFromGenre[0]);
+    setFilmCardState(films[0]);
     setGenresState([...new Set([ALL_GENRES, ...films.map((item: Film) => item.genre)])]);
   }, []);
   useEffect(() => {

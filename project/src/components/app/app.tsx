@@ -1,6 +1,6 @@
 import Main from '../main/main';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-// import SignIn from '../sign-in/sign-in';
+import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import Film from '../film/film';
 import AddReview from '../add-review/add-review';
@@ -27,13 +27,13 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       {
-        films.length > 0 ?
+        (films.length > 0) ?
           <Switch>
             <Route path={Path.MAIN} exact>
               <Main />
             </Route>
             <Route path={Path.LOGIN} exact>
-              {/*<SignIn />*/}
+              <SignIn />
             </Route>
             <Route path={Path.FILMS} exact>
               {/*<Film*/}

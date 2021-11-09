@@ -1,11 +1,8 @@
 import {ActionType} from '../types/actions';
 import {Films} from '../types/films';
 import {AuthorizationStatus} from '../types/api';
+import {UserInfo} from '../types/user';
 
-export const setActiveGenre = (genre: string) => ({
-  type: ActionType.SetActiveGenre,
-  payload: genre,
-} as const);
 export const setFilteredFilmsFromGenre = (filteredFilmsFromGenre: Films) => ({
   type: ActionType.SetFilteredFilmsFromGenre,
   payload: filteredFilmsFromGenre,
@@ -17,4 +14,8 @@ export const setFilms = (films: Films) => ({
 export const requireAuthorization = (authStatus: AuthorizationStatus) => ({
   type: ActionType.RequireAuthorization,
   payload: authStatus,
+} as const);
+export const setUserInfo = (user: UserInfo) => ({
+  type: ActionType.SetUserInfo,
+  payload: user,
 } as const);

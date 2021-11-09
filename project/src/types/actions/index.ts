@@ -2,12 +2,15 @@ import {Action, createAction, ThunkAction} from '@reduxjs/toolkit';
 import {Films} from '../films';
 import {State} from '../store';
 import {AxiosInstance} from 'axios';
+import {AuthorizationStatus} from '../api';
+import {UserInfo} from '../user';
 
 export enum ActionType {
   SetActiveGenre = 'SET_ACTIVE_GENRE',
   SetFilteredFilmsFromGenre = 'SET_FILTERED_FIL_FROM_GENRE',
   SetFilms = 'SET_FILMS',
   RequireAuthorization = 'REQUIRED_AUTHORIZATION',
+  SetUserInfo = 'SET_USER_INFO',
 }
 
 export const setFilms = createAction(
@@ -16,10 +19,22 @@ export const setFilms = createAction(
     payload: films,
   }),
 );
+export const setUserInfo = createAction(
+  ActionType.SetUserInfo,
+  (userInfo: UserInfo) => ({
+    payload: userInfo,
+  }),
+);
 export const setFilteredFilmsFromGenre = createAction(
   ActionType.SetFilteredFilmsFromGenre,
   (filteredFilmsFromGenre: Films) => ({
     payload: filteredFilmsFromGenre,
+  }),
+);
+export const requireAuthorization = createAction(
+  ActionType.RequireAuthorization,
+  (authorizationStatus: AuthorizationStatus) => ({
+    payload: authorizationStatus,
   }),
 );
 export type ThunkActionResult<R = Promise<void>> = ThunkAction<R, State, AxiosInstance, Action>;

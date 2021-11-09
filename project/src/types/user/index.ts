@@ -3,10 +3,17 @@ export type User = {
   password: string,
 };
 
-export type RawAuthInfo = {
+export type RawUserInfo = {
   id: number,
   email: string,
   name: string,
   ['avatar_url']: string,
   token: string,
 };
+export type UserInfo = {
+  id: number,
+  email: string,
+  name: string,
+  avatarUrl: string,
+  token: string,
+} | null;
