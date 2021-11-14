@@ -10,6 +10,7 @@ export type UnauthorizedCallback = () => void;
 
 export enum APIRoute {
   Films = '/films',
+  Comments = '/comments/:id',
   Login = '/login',
   Logout = '/logout',
 }

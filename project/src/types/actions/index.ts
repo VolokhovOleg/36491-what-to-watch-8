@@ -4,6 +4,7 @@ import {State} from '../store';
 import {AxiosInstance} from 'axios';
 import {AuthorizationStatus} from '../api';
 import {UserInfo} from '../user';
+import {Comments} from '../comments';
 
 export enum ActionType {
   SetActiveGenre = 'SET_ACTIVE_GENRE',
@@ -11,8 +12,15 @@ export enum ActionType {
   SetFilms = 'SET_FILMS',
   RequireAuthorization = 'REQUIRED_AUTHORIZATION',
   SetUserInfo = 'SET_USER_INFO',
+  SetComments = 'SET_COMMENTS',
 }
 
+export const setComments = createAction(
+  ActionType.SetComments,
+  (comments: Comments) => ({
+    payload: comments,
+  }),
+);
 export const setFilms = createAction(
   ActionType.SetFilms,
   (films: Films) => ({

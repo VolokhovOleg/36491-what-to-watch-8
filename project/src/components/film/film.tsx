@@ -1,6 +1,5 @@
-import {Film as FilmType, Review} from '../../types/films';
 import FilmList from '../film-list/film-list';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useParams} from 'react-router';
 import Tabs from '../tabs/tabs';
 import FilmOverview from '../film-overview/film-overview';
@@ -10,16 +9,20 @@ import {FILM_DETAILS_TAB_NAMES, HeaderType} from '../../consts';
 import {TabNameType, TabsType} from '../../types/tabs';
 import {RouteParams} from '../../types/route';
 import Header from '../header/header';
+import {useDispatch, useSelector} from 'react-redux';
+import {State} from '../../types/store';
+import {getComments} from '../../store/films/selectors';
+import {Comments} from '../../types/comments';
+import {loadComments} from '../../store/api-actions';
+import {useFilm} from '../../hooks/film/useFilm';
+import {useTabs} from '../../hooks/film/useTabs';
 
-type Props = {
-  films: FilmType[],
-  reviews: Review[],
-};
-
-function Film({films, reviews}: Props): JSX.Element {
-  const [activeFilm, setActiveFilm] = useState<FilmType | null>(null);
-  const [activeTabName, setActiveTabNameState] = useState<TabNameType | string>(TabNameType.OVERVIEW);
-  const { id } = useParams<RouteParams>();
+function Film(): JSX.Element {
+  const dispatch = useDispatch();
+  const {id} = useParams<RouteParams>();
+  const {activeFilm, films} = useFilm(id);
+  const reviews = useSelector<State, Comments>(getComments);
+  const {activeTabName, onChangeActiveTabHandler} = useTabs();
 
   const setFilmContentInfo = (TabName: TabNameType | string): JSX.Element | null => {
     if (activeFilm) {
@@ -58,13 +61,10 @@ function Film({films, reviews}: Props): JSX.Element {
 
     return null;
   };
-  const onChangeActiveTabHandler = (TabName: TabNameType | string): void => {
-    setActiveTabNameState(TabName);
-  };
 
   useEffect(() => {
-    setActiveFilm(films.find((item: FilmType) => item.id.toString() === id) || null);
-  }, []);
+    dispatch(loadComments(id));
+  }, [id]);
 
   return (
     <div>

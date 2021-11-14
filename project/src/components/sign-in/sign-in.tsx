@@ -1,28 +1,12 @@
 import Header from '../header/header';
 import {HeaderType} from '../../consts';
-import {useRef} from 'react';
 import {Redirect} from 'react-router-dom';
 import {Path} from '../../types/route';
-import {login} from '../../store/api-actions';
-import {useDispatch, useSelector} from 'react-redux';
-import {getAuthState} from '../../store/user/selectors';
-import {State} from '../../types/store';
 import {AuthorizationStatus} from '../../types/api';
+import {useSignIn} from '../../hooks/sign-in/useSignIn';
 
 function SignIn(): JSX.Element {
-  const dispatch = useDispatch();
-  const authorizationStatus = useSelector<State, AuthorizationStatus>(getAuthState);
-  const loginRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-
-  const onClickSubmitHandler = (): void => {
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(login({
-        email: loginRef.current.value,
-        password: passwordRef.current.value,
-      }));
-    }
-  };
+  const {onClickSubmitHandler, loginRef, passwordRef, authorizationStatus} = useSignIn();
 
   return (
     <>

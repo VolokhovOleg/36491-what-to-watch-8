@@ -9,20 +9,10 @@ import Error from '../error/error';
 // import PrivateRoute from '../private-router/private-router';
 import {Path} from '../../types/route';
 import Spinner from '../spinner/spinner';
-import {useDispatch, useSelector} from 'react-redux';
-import {useEffect} from 'react';
-import {loadFilms} from '../../store/api-actions';
-import {Films} from '../../types/films';
-import {getFilms} from '../../store/films/selectors';
-import {State} from '../../types/store';
+import {useAppInit} from '../../hooks/app/useAppInit';
 
 function App(): JSX.Element {
-  const dispatch = useDispatch();
-  const films = useSelector<State, Films>(getFilms);
-
-  useEffect(() => {
-    dispatch(loadFilms());
-  }, []);
+  const {films} = useAppInit();
 
   return (
     <BrowserRouter>
@@ -36,13 +26,10 @@ function App(): JSX.Element {
               <SignIn />
             </Route>
             <Route path={Path.FILMS} exact>
-              {/*<Film*/}
-              {/*  films={films}*/}
-              {/*  reviews={[]}*/}
-              {/*/>*/}
+              <Film />
             </Route>
             <Route path={Path.ADD_REVIEW} exact>
-              {/*<AddReview films={films} />*/}
+              <AddReview />
             </Route>
             <Route path={Path.PLAYER} exact>
               {/*<Player films={films}/>*/}

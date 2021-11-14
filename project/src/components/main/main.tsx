@@ -1,41 +1,17 @@
-import {useEffect, useState} from 'react';
-import {Film, Films} from '../../types/films';
 import FilmList from '../film-list/film-list';
 import {TabsType} from '../../types/tabs';
 import Tabs from '../tabs/tabs';
-import {ALL_GENRES, HeaderType, STEP_FILM_AMOUNT} from '../../consts';
+import {HeaderType} from '../../consts';
 import ShowMoreBtn from '../showe-more-btn/show-more-btn';
 import Header from '../header/header';
-import {useDispatch, useSelector} from 'react-redux';
-import {State} from '../../types/store';
-import {getFilms, getFilteredFilmsFromGenre} from '../../store/films/selectors';
-import {setFilteredFilms} from '../../store/api-actions';
+import {useGenres} from '../../hooks/main/useGenres';
+import {useFilms} from '../../hooks/main/useFilms';
+import {useFilmsToShow} from '../../hooks/main/useFilmsToShow';
 
 function Main(): JSX.Element {
-  const films = useSelector<State, Films>(getFilms);
-  const filteredFilmFromGenre = useSelector<State, Films>(getFilteredFilmsFromGenre);
-  const dispatch = useDispatch();
-
-  const [filmCard, setFilmCardState] = useState<Film | null>(null);
-  const [activeGenre, setActiveGenreState] = useState<string>(ALL_GENRES);
-  const [genres, setGenresState] = useState<string[] | null>(null);
-  const [filmAmountToShow, setFilmAmountToShowState] = useState<number>(STEP_FILM_AMOUNT);
-
-  const onChangeGenreTabHandler = (tabName: string) => {
-    setActiveGenreState(tabName);
-    setFilmAmountToShowState(STEP_FILM_AMOUNT);
-  };
-  const onClickShowMoreBtnHandler = () => {
-    setFilmAmountToShowState(filmAmountToShow + STEP_FILM_AMOUNT);
-  };
-
-  useEffect(() => {
-    setFilmCardState(films[0]);
-    setGenresState([...new Set([ALL_GENRES, ...films.map((item: Film) => item.genre)])]);
-  }, []);
-  useEffect(() => {
-    dispatch(setFilteredFilms(activeGenre));
-  }, [activeGenre]);
+  const {films, filmCard, filteredFilmFromGenre} = useFilms();
+  const {onClickShowMoreBtnHandler, filmAmountToShow, setFilmAmountToShowState} = useFilmsToShow();
+  const {genres, onChangeGenreTabHandler} = useGenres(films, setFilmAmountToShowState);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import {RatingInWord} from '../consts';
+import {RatingInWord, reviewLength} from '../consts';
 
 export const convertRating = (rating: number): RatingInWord | null => {
   switch (true) {
@@ -18,3 +18,4 @@ export const convertRating = (rating: number): RatingInWord | null => {
 };
 
 export const convertToPercentFromNumber = (number: number, fromNumber = 10): number => number * fromNumber / 100;
+export const checkPostSize = (size: number): boolean => size < reviewLength.MIN || size >= reviewLength.MAX;

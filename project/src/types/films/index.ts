@@ -43,13 +43,6 @@ export type RawFilm = {
   starring: string[],
   released: number,
 };
-export type Review = {
-  text: string,
-  author: string,
-  date: string,
-  rate: string,
-  id: number | string,
-};
 export type FilmCardVideoPlayerConfigType = {
   autoPlay: boolean,
   muted: boolean,
