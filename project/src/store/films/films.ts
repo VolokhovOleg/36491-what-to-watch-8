@@ -1,11 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {FilmsState} from '../../types/store';
-import {setFilms, setFilteredFilmsFromGenre, setComments} from '../../types/actions';
+import {setFilms, setFilteredFilmsFromGenre, setComments, setCommentsLoadState} from '../../types/actions';
+import {LoadCommentsStatus} from '../../types/api';
 
 const initialState: FilmsState = {
   films: [],
   filteredFilmsFromGenre: [],
   comments: [],
+  commentsLoadState: LoadCommentsStatus.Unknown,
 };
 
 const films = createReducer(initialState, (builder) => {
@@ -20,6 +22,10 @@ const films = createReducer(initialState, (builder) => {
   builder
     .addCase(setComments, (state, action) => {
       state.comments = action.payload;
+    });
+  builder
+    .addCase(setCommentsLoadState, (state, action) => {
+      state.commentsLoadState = action.payload;
     });
 });
 

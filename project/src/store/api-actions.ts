@@ -1,42 +1,53 @@
-import {ThunkActionResult} from '../types/actions';
+import {setCommentsLoadState, ThunkActionResult} from '../types/actions';
 import {requireAuthorization, setComments, setFilms, setFilteredFilmsFromGenre, setUserInfo} from './action';
-import {APIRoute, AuthorizationStatus} from '../types/api';
+import {APIRoute, AuthorizationStatus, LoadCommentsStatus} from '../types/api';
 import {Film, Films, RawFilm} from '../types/films';
 import {parseFilms} from '../adapters/films';
 import {RawUserInfo, User as UserType} from '../types/user';
 import {dropToken, saveToken} from '../services/token';
 import {NameSpace} from './root-reducer';
-import {ALL_GENRES} from '../consts';
+import {ALL_GENRES, AUTH_FAIL_MESSAGE} from '../consts';
 import {parseUserInfo} from '../adapters/user';
 import {Comments, ReviewType} from '../types/comments';
+import {toast} from 'react-toastify';
 
 export const postComments = (id: string, review: ReviewType): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
   try {
+    dispatch(setCommentsLoadState(LoadCommentsStatus.Load));
     const {data} = await api.post<Comments>(APIRoute.Comments.replace(':id', id), review);
     dispatch(setComments(data));
+    dispatch(setCommentsLoadState(LoadCommentsStatus.Done));
   } catch (error) {
-
+    toast.info(error);
+    dispatch(setCommentsLoadState(LoadCommentsStatus.Error));
   }
   };
 
 export const loadComments = (id: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<Comments>(APIRoute.Comments.replace(':id', id));
-    dispatch(setComments(data));
+    try {
+      const {data} = await api.get<Comments>(APIRoute.Comments.replace(':id', id));
+      dispatch(setComments(data));
+    } catch (error) {
+      toast.info(error);
+    }
   };
 
 export const loadFilms = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.get<RawFilm[]>(APIRoute.Films);
-    const parsedFilms: Films = parseFilms(data);
-    dispatch(setFilms(parsedFilms));
+    try {
+      const {data} = await api.get<RawFilm[]>(APIRoute.Films);
+      const parsedFilms: Films = parseFilms(data);
+      dispatch(setFilms(parsedFilms));
+    } catch (error) {
+      toast.info(error);
+    }
   };
 
 export const setFilteredFilms = (genre: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const films: Films = _getState()[NameSpace.films].films;
-
     if (genre !== ALL_GENRES) {
       dispatch(setFilteredFilmsFromGenre(films.filter((item: Film) => item.genre === genre)));
     } else {
@@ -46,24 +57,36 @@ export const setFilteredFilms = (genre: string): ThunkActionResult =>
 
 export const login = ({email, password}: UserType): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {data} = await api.post<RawUserInfo>(APIRoute.Login, {email, password});
-    const parsedUserInfo = parseUserInfo(data);
-    saveToken(parsedUserInfo ? parsedUserInfo.token : '');
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    dispatch(setUserInfo(parsedUserInfo));
+    try {
+      const {data} = await api.post<RawUserInfo>(APIRoute.Login, {email, password});
+      const parsedUserInfo = parseUserInfo(data);
+      saveToken(parsedUserInfo ? parsedUserInfo.token : '');
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setUserInfo(parsedUserInfo));
+    } catch (error) {
+      toast.info(error);
+    }
   };
 
 export const logoutAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    dispatch(setUserInfo(null));
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(setUserInfo(null));
+    } catch(error) {
+      toast.info(error);
+    }
   };
 
 export const checkAuthAction = (): ThunkActionResult =>
   async (dispatch, _getState, api) => {
+  try {
     const {data} = await api.get<RawUserInfo>(APIRoute.Login);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(setUserInfo(parseUserInfo(data)));
+  } catch {
+    toast.info(AUTH_FAIL_MESSAGE);
+  }
   };

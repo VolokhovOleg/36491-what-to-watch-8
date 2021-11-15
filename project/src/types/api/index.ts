@@ -3,6 +3,12 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+export enum LoadCommentsStatus {
+  Load = 'LOAD',
+  Error = 'ERROR',
+  Unknown = 'UNKNOWN',
+  Done = 'DONE',
+}
 export enum HttpCode {
   Unauthorized = 401,
 }

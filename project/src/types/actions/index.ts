@@ -2,7 +2,7 @@ import {Action, createAction, ThunkAction} from '@reduxjs/toolkit';
 import {Films} from '../films';
 import {State} from '../store';
 import {AxiosInstance} from 'axios';
-import {AuthorizationStatus} from '../api';
+import {AuthorizationStatus, LoadCommentsStatus} from '../api';
 import {UserInfo} from '../user';
 import {Comments} from '../comments';
 
@@ -13,8 +13,15 @@ export enum ActionType {
   RequireAuthorization = 'REQUIRED_AUTHORIZATION',
   SetUserInfo = 'SET_USER_INFO',
   SetComments = 'SET_COMMENTS',
+  SetCommentsLoadState = 'SET_COMMENTS_LOAD_STATE',
 }
 
+export const setCommentsLoadState = createAction(
+  ActionType.SetCommentsLoadState,
+  (commentsLoadState: LoadCommentsStatus) => ({
+    payload: commentsLoadState,
+  }),
+);
 export const setComments = createAction(
   ActionType.SetComments,
   (comments: Comments) => ({
