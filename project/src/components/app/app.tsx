@@ -32,7 +32,7 @@ function App(): JSX.Element {
               <AddReview />
             </Route>
             <Route path={Path.PLAYER} exact>
-              {/*<Player films={films}/>*/}
+              <Player />
             </Route>
             {/*<PrivateRoute*/}
             {/*  exact*/}

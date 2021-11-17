@@ -2,7 +2,7 @@ import {useSelector} from 'react-redux';
 import {State} from '../../types/store';
 import {Film, Film as FilmType, Films} from '../../types/films';
 import {getFilms} from '../../store/films/selectors';
-import {useEffect, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 type returnHookProps = {
   activeFilm: Film | null,

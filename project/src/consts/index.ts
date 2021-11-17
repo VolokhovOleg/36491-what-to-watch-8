@@ -1,6 +1,7 @@
 import {TabNameType} from '../types/tabs';
 
 export const DELAY_TO_PLAY_VIDEO = 1000;
+export const ONE_HOUR_IN_SECONDS = 3600;
 export const STEP_FILM_AMOUNT = 8;
 export const ALL_GENRES = 'All genres';
 export const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
