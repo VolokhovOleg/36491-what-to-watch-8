@@ -6,7 +6,7 @@ import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import Error from '../error/error';
-// import PrivateRoute from '../private-router/private-router';
+import PrivateRoute from '../private-router/private-router';
 import {Path} from '../../types/route';
 import Spinner from '../spinner/spinner';
 import {useAppInit} from '../../hooks/app/useAppInit';
@@ -34,13 +34,13 @@ function App(): JSX.Element {
             <Route path={Path.PLAYER} exact>
               <Player />
             </Route>
-            {/*<PrivateRoute*/}
-            {/*  exact*/}
-            {/*  path={Path.MY_LIST}*/}
-            {/*  render={() => (*/}
-            {/*    <MyList films={films} />*/}
-            {/*  )}*/}
-            {/*/>*/}
+            <PrivateRoute
+              exact
+              path={Path.MY_LIST}
+              render={() => (
+                <MyList films={films} />
+              )}
+            />
             <Route>
               <Error />
             </Route>
