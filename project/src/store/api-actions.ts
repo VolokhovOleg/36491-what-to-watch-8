@@ -1,12 +1,12 @@
 import {setCommentsLoadState, ThunkActionResult} from '../types/actions';
-import {requireAuthorization, setComments, setFilms, setFilteredFilmsFromGenre, setUserInfo} from './action';
+import {requireAuthorization, setComments, setFilms, setFilteredFilmsFromGenre, setUserInfo, setMyList} from './action';
 import {APIRoute, AuthorizationStatus, LoadCommentsStatus} from '../types/api';
-import {Film, Films, RawFilm} from '../types/films';
-import {parseFilms} from '../adapters/films';
+import {CurrentFilmId, Film, Films, RawFilm} from '../types/films';
+import {parseFilm, parseFilms} from '../adapters/films';
 import {RawUserInfo, User as UserType} from '../types/user';
 import {dropToken, saveToken} from '../services/token';
 import {NameSpace} from './root-reducer';
-import {ALL_GENRES, AUTH_FAIL_MESSAGE} from '../consts';
+import {ALL_GENRES, AUTH_FAIL_MESSAGE, FILM_ID_FAIL_MESSAGE} from '../consts';
 import {parseUserInfo} from '../adapters/user';
 import {Comments, ReviewType} from '../types/comments';
 import {toast} from 'react-toastify';
@@ -52,6 +52,38 @@ export const setFilteredFilms = (genre: string): ThunkActionResult =>
       dispatch(setFilteredFilmsFromGenre(films.filter((item: Film) => item.genre === genre)));
     } else {
       dispatch(setFilteredFilmsFromGenre(films));
+    }
+  };
+
+export const loadMyList = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.get<RawFilm[]>(APIRoute.Favorite);
+      const parsedFilms: Films = parseFilms(data);
+      dispatch(setMyList(parsedFilms));
+    } catch (error) {
+      toast.info(error);
+    }
+  };
+
+export const changeMyList = (status: number): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const id: CurrentFilmId = _getState()[NameSpace.films].currentFilmId;
+      if (id !== null) {
+        await api.post<RawFilm>(
+          APIRoute.Post_Favorite
+            .replace(':id', id.toString())
+            .replace(':status', status.toString())
+        );
+        const {data} = await api.get<RawFilm[]>(APIRoute.Favorite)
+        const parsedFilms: Films = parseFilms(data);
+        dispatch(setMyList(parsedFilms));
+      } else {
+        toast.info(FILM_ID_FAIL_MESSAGE);
+      }
+    } catch (error) {
+      toast.info(error);
     }
   };
 

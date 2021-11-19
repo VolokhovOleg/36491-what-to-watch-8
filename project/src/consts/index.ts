@@ -5,6 +5,7 @@ export const ONE_HOUR_IN_SECONDS = 3600;
 export const STEP_FILM_AMOUNT = 8;
 export const ALL_GENRES = 'All genres';
 export const AUTH_FAIL_MESSAGE = 'Не забудьте авторизоваться';
+export const FILM_ID_FAIL_MESSAGE = 'Такого фильма не существует';
 export const AUTH_TOKEN_KEY_NAME = 'wtw-token';
 export const BACKEND_URL = 'https://8.react.pages.academy/wtw';
 export const REQUEST_TIMEOUT = 5000;

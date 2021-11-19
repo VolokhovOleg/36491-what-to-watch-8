@@ -1,13 +1,11 @@
-import {Film as FilmType} from '../../types/films';
 import FilmList from '../film-list/film-list';
 import Header from '../header/header';
 import {HeaderType} from '../../consts';
+import {useMyList} from '../../hooks/my-list/useMyList';
 
-type Props = {
-  films: FilmType[]
-};
+function MyList(): JSX.Element {
+ const {films} = useMyList();
 
-function MyList({films}: Props): JSX.Element {
   return (
     <div className="user-page">
       <Header headerType={HeaderType.MY_LIST} />

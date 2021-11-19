@@ -1,8 +1,18 @@
-import {SyntheticEvent, useRef, useState} from 'react';
+import {RefObject, SyntheticEvent, useRef, useState} from 'react';
 import {postComments} from '../../store/api-actions';
 import {useDispatch} from 'react-redux';
 
-export const useCommentsForm = (id: string) => {
+type returnHookProps = {
+  formFieldset: RefObject<HTMLFieldSetElement>,
+  textAreaRef: RefObject<HTMLTextAreaElement>,
+  commentValue: string,
+  ratingValue: number,
+  onChangeTextAreaHandler: () => void,
+  onSubmitFormHandler: (evt: SyntheticEvent) => void,
+  onChangeHandler: (evt: SyntheticEvent) => void,
+};
+
+export const useCommentsForm = (id: string): returnHookProps => {
   const dispatch = useDispatch();
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const formFieldset = useRef<HTMLFieldSetElement>(null);

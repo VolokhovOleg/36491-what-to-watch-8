@@ -13,16 +13,25 @@ import {useDispatch, useSelector} from 'react-redux';
 import {State} from '../../types/store';
 import {getComments} from '../../store/films/selectors';
 import {Comments} from '../../types/comments';
-import {loadComments} from '../../store/api-actions';
+import {changeMyList, loadComments} from '../../store/api-actions';
 import {useFilm} from '../../hooks/film/useFilm';
 import {useTabs} from '../../hooks/film/useTabs';
+import {useCheckFilmInMyList} from '../../hooks/my-list/useCheckFilmInMyList';
 
 function Film(): JSX.Element {
   const dispatch = useDispatch();
+  const reviews = useSelector<State, Comments>(getComments);
   const {id} = useParams<RouteParams>();
   const {activeFilm, films} = useFilm(id);
-  const reviews = useSelector<State, Comments>(getComments);
+  const {inMyList} = useCheckFilmInMyList();
   const {activeTabName, onChangeActiveTabHandler} = useTabs();
+
+  const onCLickAddToMyListButtonHandler = () => {
+    dispatch(changeMyList(1));
+  };
+  const onCLickRemoveFromMyListButtonHandler = () => {
+    dispatch(changeMyList(0));
+  };
 
   const setFilmContentInfo = (TabName: TabNameType | string): JSX.Element | null => {
     if (activeFilm) {
@@ -92,12 +101,21 @@ function Film(): JSX.Element {
                       </svg>
                       <span>Play</span>
                     </button>
-                    <button className="btn btn--list film-card__button" type="button">
-                      <svg viewBox="0 0 19 20" width={19} height={20}>
-                        <use xlinkHref="#add" />
-                      </svg>
-                      <span>My list</span>
-                    </button>
+                    {
+                      inMyList
+                        ? <button onClick={onCLickRemoveFromMyListButtonHandler} className="btn btn--list film-card__button" type="button">
+                          <svg viewBox="0 0 18 14" width={18} height={14}>
+                            <use xlinkHref="#in-list" />
+                          </svg>
+                          <span>My list</span>
+                        </button>
+                        : <button onClick={onCLickAddToMyListButtonHandler} className="btn btn--list film-card__button" type="button">
+                          <svg viewBox="0 0 19 20" width={19} height={20}>
+                            <use xlinkHref="#add" />
+                          </svg>
+                          <span>My list</span>
+                        </button>
+                    }
                     <a href="add-review.html" className="btn film-card__button">Add review</a>
                   </div>
                 </div>

@@ -49,3 +49,4 @@ export type FilmCardVideoPlayerConfigType = {
   width: string,
   style: InlineStyleType
 };
+export type CurrentFilmId = number | null;

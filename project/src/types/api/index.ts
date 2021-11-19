@@ -19,4 +19,6 @@ export enum APIRoute {
   Comments = '/comments/:id',
   Login = '/login',
   Logout = '/logout',
+  Favorite = '/favorite',
+  Post_Favorite = '/favorite/:id/:status',
 }

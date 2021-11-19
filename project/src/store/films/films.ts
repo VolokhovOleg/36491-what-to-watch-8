@@ -1,11 +1,20 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {FilmsState} from '../../types/store';
-import {setFilms, setFilteredFilmsFromGenre, setComments, setCommentsLoadState} from '../../types/actions';
+import {
+  setMyList,
+  setFilms,
+  setFilteredFilmsFromGenre,
+  setComments,
+  setCommentsLoadState,
+  setCurrentFilmId
+} from '../../types/actions';
 import {LoadCommentsStatus} from '../../types/api';
 
 const initialState: FilmsState = {
   films: [],
   filteredFilmsFromGenre: [],
+  currentFilmId: null,
+  myList: [],
   comments: [],
   commentsLoadState: LoadCommentsStatus.Unknown,
 };
@@ -18,6 +27,14 @@ const films = createReducer(initialState, (builder) => {
   builder
     .addCase(setFilteredFilmsFromGenre, (state, action) => {
       state.filteredFilmsFromGenre = action.payload;
+    });
+  builder
+    .addCase(setCurrentFilmId, (state, action) => {
+      state.currentFilmId = action.payload;
+    });
+  builder
+    .addCase(setMyList, (state, action) => {
+      state.myList = action.payload;
     });
   builder
     .addCase(setComments, (state, action) => {

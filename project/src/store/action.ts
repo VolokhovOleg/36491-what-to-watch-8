@@ -8,6 +8,10 @@ export const setFilteredFilmsFromGenre = (filteredFilmsFromGenre: Films) => ({
   type: ActionType.SetFilteredFilmsFromGenre,
   payload: filteredFilmsFromGenre,
 } as const);
+export const setMyList = (myList: Films) => ({
+  type: ActionType.SetMyList,
+  payload: myList,
+} as const);
 export const setFilms = (films: Films) => ({
   type: ActionType.SetFilms,
   payload: films,

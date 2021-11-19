@@ -38,7 +38,7 @@ function App(): JSX.Element {
               exact
               path={Path.MY_LIST}
               render={() => (
-                <MyList films={films} />
+                <MyList />
               )}
             />
             <Route>

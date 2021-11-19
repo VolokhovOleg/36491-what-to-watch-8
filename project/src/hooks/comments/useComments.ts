@@ -3,10 +3,15 @@ import {LoadCommentsStatus} from '../../types/api';
 import {setCommentsLoadState} from '../../types/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {getCommentsLoadState} from '../../store/films/selectors';
+import {State} from '../../types/store';
 
-export const useComments = (formFieldset: RefObject<HTMLFieldSetElement> | null) => {
+type returnHookProps = {
+  commentsLoadState: LoadCommentsStatus,
+};
+
+export const useComments = (formFieldset: RefObject<HTMLFieldSetElement> | null): returnHookProps => {
   const dispatch = useDispatch();
-  const commentsLoadState = useSelector(getCommentsLoadState);
+  const commentsLoadState = useSelector<State, LoadCommentsStatus>(getCommentsLoadState);
 
   useEffect(() => {
     if (formFieldset && formFieldset.current) {
