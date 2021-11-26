@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {useUser} from '../../hooks/user/useUser';
 
 function User(): JSX.Element {
- const {authorizationStatus, userInfo, onClickLogOutHandler} = useUser();
+  const {authorizationStatus, userInfo, onClickLogOutHandler} = useUser();
 
   return (
     <ul className="user-block">

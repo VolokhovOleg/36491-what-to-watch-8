@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Film} from '../../types/films';
 import {DELAY_TO_PLAY_VIDEO} from '../../consts';
 import FilmCardVideoPlayer from '../film-card-videoplayer/film-card-videoplayer';
+import {Path} from '../../types/route';
 
 type Props = Pick<Film, 'imageSrc' | 'title' | 'id' | 'trailerSrc'>;
 
@@ -34,7 +35,12 @@ function FilmItem({imageSrc, title, id, trailerSrc}: Props): JSX.Element {
               <img src={imageSrc} alt={title} width={280} height={175}/>
             </div>
             <h3 className="small-film-card__title">
-              <Link className={'small-film-card__link'} to={`film/${id}`}>{title}</Link>
+              <Link
+                className={'small-film-card__link'}
+                to={Path.FILMS.replace(':id', id.toString())}
+              >
+                {title}
+              </Link>
             </h3>
           </>
           :

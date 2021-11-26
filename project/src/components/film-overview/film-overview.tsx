@@ -6,13 +6,10 @@ function FilmOverview({score, lvl, rating, description, director, starring}: Pro
   return (
     <>
       <div className="film-rating">
-        <div className="film-rating__score">{score}</div>
+        <div className="film-rating__score">{rating}</div>
         <p className="film-rating__meta">
-          {
-            lvl &&
-            <span className="film-rating__level">{lvl}</span>
-          }
-          <span className="film-rating__count">{rating} ratings</span>
+          <span className="film-rating__level">{lvl}</span>
+          <span className="film-rating__count">{score} ratings</span>
         </p>
       </div>
       <div className="film-card__text">

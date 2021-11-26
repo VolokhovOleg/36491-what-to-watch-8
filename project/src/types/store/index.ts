@@ -6,6 +6,7 @@ import {Comments} from '../comments';
 
 export type FilmsState = {
   films: Films,
+  similarFilms: Films,
   filteredFilmsFromGenre: Films,
   myList: Films,
   comments: Comments,

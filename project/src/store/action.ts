@@ -16,6 +16,10 @@ export const setFilms = (films: Films) => ({
   type: ActionType.SetFilms,
   payload: films,
 } as const);
+export const setSimilarFilms = (similarFilms: Films) => ({
+  type: ActionType.SetSimilarFilms,
+  payload: similarFilms,
+} as const);
 export const setComments = (comments: Comments) => ({
   type: ActionType.SetComments,
   payload: comments,

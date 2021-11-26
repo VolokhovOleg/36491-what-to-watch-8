@@ -18,7 +18,13 @@ export const useFilm = (id: string): returnHookProps => {
   useEffect(() => {
     dispatch(setCurrentFilmId(parseInt(id, 10)));
     setActiveFilm(films.find((item: FilmType) => item.id.toString() === id) || null);
-  }, []);
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, [id]);
 
   return {activeFilm, films};
 };

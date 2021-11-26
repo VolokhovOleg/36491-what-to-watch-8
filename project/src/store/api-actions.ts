@@ -1,5 +1,13 @@
 import {setCommentsLoadState, ThunkActionResult} from '../types/actions';
-import {requireAuthorization, setComments, setFilms, setFilteredFilmsFromGenre, setUserInfo, setMyList} from './action';
+import {
+  requireAuthorization,
+  setComments,
+  setFilms,
+  setFilteredFilmsFromGenre,
+  setUserInfo,
+  setMyList,
+  setSimilarFilms
+} from './action';
 import {APIRoute, AuthorizationStatus, LoadCommentsStatus} from '../types/api';
 import {CurrentFilmId, Film, Films, RawFilm} from '../types/films';
 import {parseFilm, parseFilms} from '../adapters/films';
@@ -40,6 +48,16 @@ export const loadFilms = (): ThunkActionResult =>
       const {data} = await api.get<RawFilm[]>(APIRoute.Films);
       const parsedFilms: Films = parseFilms(data);
       dispatch(setFilms(parsedFilms));
+    } catch (error) {
+      toast.info(error);
+    }
+  };
+export const loadSimilarFilms = (id: number | string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.get<RawFilm[]>(APIRoute.Film_Similar.replace(':id', id.toString()));
+      const parsedFilms: Films = parseFilms(data);
+      dispatch(setSimilarFilms(parsedFilms));
     } catch (error) {
       toast.info(error);
     }

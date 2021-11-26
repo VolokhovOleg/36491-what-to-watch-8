@@ -9,6 +9,7 @@ import {Comments} from '../comments';
 export enum ActionType {
   SetFilteredFilmsFromGenre = 'SET_FILTERED_FIL_FROM_GENRE',
   SetFilms = 'SET_FILMS',
+  SetSimilarFilms = 'SET_SIMILAR_FILMS',
   RequireAuthorization = 'REQUIRED_AUTHORIZATION',
   SetUserInfo = 'SET_USER_INFO',
   SetComments = 'SET_COMMENTS',
@@ -39,6 +40,12 @@ export const setFilms = createAction(
   ActionType.SetFilms,
   (films: Films) => ({
     payload: films,
+  }),
+);
+export const setSimilarFilms = createAction(
+  ActionType.SetSimilarFilms,
+  (similarFilms: Films) => ({
+    payload: similarFilms,
   }),
 );
 export const setCurrentFilmId = createAction(

@@ -1,5 +1,4 @@
 import FilmList from '../film-list/film-list';
-import {useEffect} from 'react';
 import {useParams} from 'react-router';
 import Tabs from '../tabs/tabs';
 import FilmOverview from '../film-overview/film-overview';
@@ -7,22 +6,25 @@ import FilmDetails from '../film-deails/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
 import {FILM_DETAILS_TAB_NAMES, HeaderType} from '../../consts';
 import {TabNameType, TabsType} from '../../types/tabs';
-import {RouteParams} from '../../types/route';
+import {Path, RouteParams} from '../../types/route';
 import Header from '../header/header';
-import {useDispatch, useSelector} from 'react-redux';
-import {State} from '../../types/store';
-import {getComments} from '../../store/films/selectors';
-import {Comments} from '../../types/comments';
-import {changeMyList, loadComments} from '../../store/api-actions';
+import {useDispatch} from 'react-redux';
+import {changeMyList} from '../../store/api-actions';
 import {useFilm} from '../../hooks/film/useFilm';
 import {useTabs} from '../../hooks/film/useTabs';
 import {useCheckFilmInMyList} from '../../hooks/my-list/useCheckFilmInMyList';
+import Footer from '../footer/footer';
+import {useSimilarFilms} from '../../hooks/film/useSimilarFilms';
+import {useLoadComments} from '../../hooks/comments/useLoadComments';
+import {Link, useHistory} from 'react-router-dom';
 
 function Film(): JSX.Element {
   const dispatch = useDispatch();
-  const reviews = useSelector<State, Comments>(getComments);
+  const history = useHistory();
   const {id} = useParams<RouteParams>();
-  const {activeFilm, films} = useFilm(id);
+  const {activeFilm} = useFilm(id);
+  const {reviews} = useLoadComments(id);
+  const {similarFilms} = useSimilarFilms(id);
   const {inMyList} = useCheckFilmInMyList();
   const {activeTabName, onChangeActiveTabHandler} = useTabs();
 
@@ -31,6 +33,9 @@ function Film(): JSX.Element {
   };
   const onCLickRemoveFromMyListButtonHandler = () => {
     dispatch(changeMyList(0));
+  };
+  const onClickPlayButtonHandler = () => {
+    history.push(Path.PLAYER.replace(':id', id.toString()));
   };
 
   const setFilmContentInfo = (TabName: TabNameType | string): JSX.Element | null => {
@@ -71,16 +76,12 @@ function Film(): JSX.Element {
     return null;
   };
 
-  useEffect(() => {
-    dispatch(loadComments(id));
-  }, [id]);
-
   return (
     <div>
       {
         activeFilm &&
         <>
-          <section className="film-card film-card--full">
+          <section className="film-card film-card--full" style={{backgroundColor: activeFilm.bgColor}}>
             <div className="film-card__hero">
               <div className="film-card__bg">
                 <img src={activeFilm.bgImage} alt={activeFilm.title} />
@@ -95,7 +96,11 @@ function Film(): JSX.Element {
                     <span className="film-card__year">{activeFilm.release}</span>
                   </p>
                   <div className="film-card__buttons">
-                    <button className="btn btn--play film-card__button" type="button">
+                    <button
+                      onClick={onClickPlayButtonHandler}
+                      className="btn btn--play film-card__button"
+                      type="button"
+                    >
                       <svg viewBox="0 0 19 19" width={19} height={19}>
                         <use xlinkHref="#play-s" />
                       </svg>
@@ -116,7 +121,7 @@ function Film(): JSX.Element {
                           <span>My list</span>
                         </button>
                     }
-                    <a href="add-review.html" className="btn film-card__button">Add review</a>
+                    <Link to={Path.ADD_REVIEW.replace(':id', id)} className="btn film-card__button">Add review</Link>
                   </div>
                 </div>
               </div>
@@ -142,20 +147,15 @@ function Film(): JSX.Element {
           <div className="page-content">
             <section className="catalog catalog--like-this">
               <h2 className="catalog__title">More like this</h2>
-              <FilmList films={films.slice(4)}/>
+              {
+                similarFilms && similarFilms.length > 0 &&
+                <FilmList films={similarFilms}/>
+              }
+              {
+                similarFilms && similarFilms.length === 0 && 'Нет похожих фильмов'
+              }
             </section>
-            <footer className="page-footer">
-              <div className="logo">
-                <a href="main.html" className="logo__link logo__link--light">
-                  <span className="logo__letter logo__letter--1">W</span>
-                  <span className="logo__letter logo__letter--2">T</span>
-                  <span className="logo__letter logo__letter--3">W</span>
-                </a>
-              </div>
-              <div className="copyright">
-                <p>© 2019 What to watch Ltd.</p>
-              </div>
-            </footer>
+            <Footer />
           </div>
         </>
       }

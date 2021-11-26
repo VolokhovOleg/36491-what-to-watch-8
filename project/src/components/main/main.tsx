@@ -7,11 +7,24 @@ import Header from '../header/header';
 import {useGenres} from '../../hooks/main/useGenres';
 import {useFilms} from '../../hooks/main/useFilms';
 import {useFilmsToShow} from '../../hooks/main/useFilmsToShow';
+import Footer from '../footer/footer';
+import {useHistory} from 'react-router-dom';
+import {Path} from '../../types/route';
 
 function Main(): JSX.Element {
+  const history = useHistory();
   const {films, filmCard, filteredFilmFromGenre} = useFilms();
   const {onClickShowMoreBtnHandler, filmAmountToShow, setFilmAmountToShowState} = useFilmsToShow();
   const {genres, onChangeGenreTabHandler} = useGenres(films, setFilmAmountToShowState);
+
+  const onClickPlayButtonHandler = () => {
+    if (filmCard) {
+      history.push(Path.PLAYER.replace(':id', filmCard.id.toString()));
+    }
+  };
+  const onClickMyListButtonHandler = () => {
+    history.push(Path.MY_LIST);
+  };
 
   return (
     <>
@@ -41,13 +54,21 @@ function Main(): JSX.Element {
                   </span>
                 </p>
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
+                  <button
+                    onClick={onClickPlayButtonHandler}
+                    className="btn btn--play film-card__button"
+                    type="button"
+                  >
                     <svg viewBox="0 0 19 19" width={19} height={19}>
                       <use xlinkHref="#play-s"/>
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list film-card__button" type="button">
+                  <button
+                    onClick={onClickMyListButtonHandler}
+                    className="btn btn--list film-card__button"
+                    type="button"
+                  >
                     <svg viewBox="0 0 19 20" width={19} height={20}>
                       <use xlinkHref="#add"/>
                     </svg>
@@ -73,18 +94,7 @@ function Main(): JSX.Element {
             <ShowMoreBtn handler={onClickShowMoreBtnHandler}/>
           }
         </section>
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>);
 }

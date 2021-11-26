@@ -6,12 +6,14 @@ import {
   setFilteredFilmsFromGenre,
   setComments,
   setCommentsLoadState,
-  setCurrentFilmId
+  setCurrentFilmId,
+  setSimilarFilms,
 } from '../../types/actions';
 import {LoadCommentsStatus} from '../../types/api';
 
 const initialState: FilmsState = {
   films: [],
+  similarFilms: [],
   filteredFilmsFromGenre: [],
   currentFilmId: null,
   myList: [],
@@ -23,6 +25,10 @@ const films = createReducer(initialState, (builder) => {
   builder
     .addCase(setFilms, (state, action) => {
       state.films = action.payload;
+    });
+  builder
+    .addCase(setSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
     });
   builder
     .addCase(setFilteredFilmsFromGenre, (state, action) => {
